@@ -8,41 +8,41 @@
 import SpriteKit
 
 protocol BlockUseCase {
-    func startDraggingBlock(at position: CGPoint, type: BlockType) -> SKSpriteNode
-    func moveBlock(_ block: SKSpriteNode, to position: CGPoint)
-    func releaseBlock(silhouetteBlock: SKSpriteNode, type: BlockType, at position: CGPoint)
+    func startDraggingBlock(at position: CGPoint, type: BlockType)
+    func moveBlock(to position: CGPoint)
+    func releaseBlock(type: BlockType, at position: CGPoint)
 }
 
-struct BlockUseCaseImpl: BlockUseCase {
-    
+final class BlockUseCaseImpl: BlockUseCase {
     /// NOTE: DI(Container)에서 Scene을 주입받도록 설정
     private weak var scene: SKScene?
-
+    private var silhouetteBlock: SKSpriteNode?
+    
     init(scene: SKScene) {
         self.scene = scene
     }
-
-    /// 실루엣 블록 생성
-    func startDraggingBlock(at position: CGPoint, type: BlockType) -> SKSpriteNode {
-        let silhouetteBlock = BlockFactory.createSilhouetteBlock(from: type)
-        silhouetteBlock.position = position
-        scene?.addChild(silhouetteBlock)
-        
-        return silhouetteBlock
+    
+    func startDraggingBlock(at position: CGPoint, type: BlockType) {
+        if silhouetteBlock == nil {
+            silhouetteBlock = BlockFactory.createSilhouetteBlock(from: type)
+            silhouetteBlock?.position = position
+            scene?.addChild(silhouetteBlock!)
+        }
     }
     
-    /// 블록 이동
-    func moveBlock(_ block: SKSpriteNode, to position: CGPoint) {
-        block.position = position
+    func moveBlock(to position: CGPoint) {
+        silhouetteBlock?.position = position  // ✅ 드래그 중 블록 위치 업데이트
     }
-
-    /// 블록 배치 완료 (실루엣 → 실제 블록)
-    func releaseBlock(silhouetteBlock: SKSpriteNode, type: BlockType, at position: CGPoint) {
-        silhouetteBlock.removeFromParent()
+    
+    func releaseBlock(type: BlockType, at position: CGPoint) {
+        guard let block = silhouetteBlock else { return }
+        block.removeFromParent()
         
-        let block = BlockFactory.createBlockNode(from: type)
-        block.position = position
-        scene?.addChild(block)
+        let realBlock = BlockFactory.createBlockNode(from: type)
+        realBlock.position = position
+        scene?.addChild(realBlock)
+        
+        silhouetteBlock = nil  // ✅ 블록 배치 후 제거
     }
-
+    
 }
