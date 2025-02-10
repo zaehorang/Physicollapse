@@ -9,19 +9,38 @@ import SpriteKit
 import SwiftUI
 
 struct CollapseSpriteView: View {
-    @StateObject private var scene = CollapseScene() // 한 번만 생성하도록 변경
+    @State private var selectedBlockType: BlockType = .oBlock
+    
+    // 한 번만 생성하도록 변경
+    @StateObject private var scene = CollapseScene()
     
     var body: some View {
+        HStack {
+            Button("🚩 O Block") {
+                selectedBlockType = .oBlock
+            }
+            .padding()
+            .background(selectedBlockType == .oBlock ? Color.blue.opacity(0.5) : Color.gray.opacity(0.3))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            Button("🔺 T Block") {
+                selectedBlockType = .tBlock
+            }
+            .padding()
+            .background(selectedBlockType == .tBlock ? Color.blue.opacity(0.5) : Color.gray.opacity(0.3))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+        }
+        
         SpriteView(scene: scene)
-            .ignoresSafeArea()
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
-                        print("changed: \(value.location)")
+                        scene.startDraggingBlock(at: value.location, type: selectedBlockType)
                         
                     }
                     .onEnded { value in
-                        print("end: \(value.location)")
+                        scene.releaseBlock(type: selectedBlockType, at: value.location)
                     }
             )
     }
