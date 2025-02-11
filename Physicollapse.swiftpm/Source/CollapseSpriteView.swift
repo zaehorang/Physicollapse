@@ -30,6 +30,20 @@ struct CollapseSpriteView: View {
             .background(selectedBlockType == .tBlock ? Color.blue.opacity(0.5) : Color.gray.opacity(0.3))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             
+            Button("Up") {
+                scene.moveCameraUp()
+            }
+            .padding()
+            .background(.yellow.opacity(0.3))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            Button("Down") {
+                scene.moveCameraDown()
+            }
+            .padding()
+            .background(.yellow.opacity(0.3))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
         }
         
         SpriteView(scene: scene)
