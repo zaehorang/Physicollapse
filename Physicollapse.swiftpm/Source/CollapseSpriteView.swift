@@ -9,56 +9,50 @@ import SpriteKit
 import SwiftUI
 
 struct CollapseSpriteView: View {
-    @State private var selectedBlockType: BlockType = .oBlock
-    
-    // 한 번만 생성하도록 변경
     @StateObject private var scene = CollapseScene()
     
+    let selectedBlockType: BlockType
+    let onHeightChange: (CGFloat) -> Void
+    
     var body: some View {
-        HStack {
-            Button("🚩 O Block") {
-                selectedBlockType = .oBlock
+        VStack {
+            VStack {
+                HStack {
+                    Button("Up") {
+                        scene.moveCameraUp()
+                    }
+                    .padding()
+                    .background(.yellow.opacity(0.3))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    
+                    Button("Down") {
+                        scene.moveCameraDown()
+                    }
+                    .padding()
+                    .background(.yellow.opacity(0.3))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
             }
-            .padding()
-            .background(selectedBlockType == .oBlock ? Color.blue.opacity(0.5) : Color.gray.opacity(0.3))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
             
-            Button("🔺 T Block") {
-                selectedBlockType = .tBlock
-            }
-            .padding()
-            .background(selectedBlockType == .tBlock ? Color.blue.opacity(0.5) : Color.gray.opacity(0.3))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            
-            Button("Up") {
-                scene.moveCameraUp()
-            }
-            .padding()
-            .background(.yellow.opacity(0.3))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            
-            Button("Down") {
-                scene.moveCameraDown()
-            }
-            .padding()
-            .background(.yellow.opacity(0.3))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            
+            SpriteView(scene: scene)
+                .gesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { value in
+                            scene.handleDraggingBlock(at: value.location, type: selectedBlockType)
+                        }
+                        .onEnded { value in
+                            scene.releaseBlockAndAdjustCamera(type: selectedBlockType, at: value.location)
+                        }
+                )
         }
-        
-        SpriteView(scene: scene)
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        scene.handleDraggingBlock(at: value.location, type: selectedBlockType)
-                    }
-                    .onEnded { value in
-                        scene.releaseBlockAndAdjustCamera(type: selectedBlockType, at: value.location)
-                    }
-            )
+        .onChange(of: scene.highestBlockHeight) {
+            onHeightChange(scene.highestBlockHeight)
+        }
     }
 }
 
 #Preview {
-    CollapseSpriteView()
+    CollapseSpriteView(selectedBlockType: .iBlock) { height in
+        print("height: \(height)")
+    }
 }
