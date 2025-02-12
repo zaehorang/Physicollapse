@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum BlockType: String {
+enum BlockType: String, CaseIterable {
     // TODO: 더 추가 예정
     case tBlock, oBlock, iBlock, jBlock, lBlock, sBlock, shortIBlock, shortOBlock, shortTBlock, zBlock
     
@@ -47,4 +47,5 @@ struct Block {
                            height: CGFloat(heightCount) * unit)
         
         self.imageName = type.rawValue + ".png"
-    }}
+    }
+}
