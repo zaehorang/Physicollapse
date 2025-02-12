@@ -50,15 +50,10 @@ struct CollapseSpriteView: View {
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
-                        if scene.isDragging {
-                            scene.moveBlock(to: value.location)
-                        } else {
-                            scene.startDraggingBlock(at: value.location, type: selectedBlockType)
-                        }
-                        
+                        scene.handleDraggingBlock(at: value.location, type: selectedBlockType)
                     }
                     .onEnded { value in
-                        scene.releaseBlock(type: selectedBlockType, at: value.location)
+                        scene.releaseBlockAndAdjustCamera(type: selectedBlockType, at: value.location)
                     }
             )
     }

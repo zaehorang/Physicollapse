@@ -4,7 +4,7 @@ final class CollapseScene: SKScene, ObservableObject {
     private var blockUseCase: BlockUseCase!
     private var cameraUseCase: CameraUseCase!
     
-    var isDragging = false
+    private var isDragging = false
     
     ///  Scene이 View에 추가되었을 때 한 번만 호출됨
     /// - UseCase를 이 시점에서 초기화하는 것이 안정적 (Scene이 완전히 로드된 후 주입)
@@ -26,32 +26,27 @@ final class CollapseScene: SKScene, ObservableObject {
         self.scaleMode = .resizeFill
     }
     
-    // MARK: - Block UseCase Method
-    /// 블록 드래그 시작
-    func startDraggingBlock(at position: CGPoint, type: BlockType) {
-        isDragging = true
-        
+    // MARK: - Public Method (For External Use)
+    
+    //  블록 조작 관련 외부에서 호출하는 메서드
+    func handleDraggingBlock(at position: CGPoint, type: BlockType) {
         let convertedPosition = convertPosition(from: position)
-        blockUseCase.startDraggingBlock(at: convertedPosition, type: type)
+        
+        if isDragging {
+            moveBlock(to: convertedPosition)
+        } else {
+            startDraggingBlock(at: convertedPosition, type: type)
+        }
     }
     
-    /// 블록 이동
-    func moveBlock(to position: CGPoint) {
+    func releaseBlockAndAdjustCamera(type: BlockType, at position: CGPoint) {
         let convertedPosition = convertPosition(from: position)
-        blockUseCase.moveBlock(to: convertedPosition)
-    }
-    
-    func releaseBlock(type: BlockType, at position: CGPoint) {
-        isDragging = false
         
-        let convertedPosition = convertPosition(from: position)
-        blockUseCase.releaseBlock(type: type, at: convertedPosition)
-        
-        // 카메라 조정
+        releaseBlock(type: type, at: convertedPosition)
         adjustCamera(for: convertedPosition)
     }
     
-    // MARK: - Camera UseCase Method
+    //  카메라 조작 관련 외부에서 호출하는 메서드
     func moveCameraUp() {
         cameraUseCase.moveCameraUp()
     }
@@ -60,6 +55,26 @@ final class CollapseScene: SKScene, ObservableObject {
         cameraUseCase.moveCameraDown()
     }
     
+    // MARK: - Block UseCase Methods (Internal)
+    
+    /// 블록 드래그 시작
+    private func startDraggingBlock(at position: CGPoint, type: BlockType) {
+        isDragging = true
+        blockUseCase.startDraggingBlock(at: position, type: type)
+    }
+    
+    /// 블록 이동
+    private func moveBlock(to position: CGPoint) {
+        blockUseCase.moveBlock(to: position)
+    }
+    
+    private func releaseBlock(type: BlockType, at position: CGPoint) {
+        isDragging = false
+        blockUseCase.releaseBlock(type: type, at: position)
+    }
+    
+    // MARK: - Camera UseCase Methods (Internal)
+
     private func adjustCamera(for blockPosition: CGPoint) {
         cameraUseCase.adjustCamera(to: blockPosition)
     }
@@ -95,7 +110,7 @@ final class CollapseScene: SKScene, ObservableObject {
         rightWall.physicsBody = rightWallBody
         addChild(rightWall)
     }
-
+    
     
     // MARK: - Helper Method
     
