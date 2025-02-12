@@ -8,7 +8,7 @@
 import SpriteKit
 
 struct BlockFactory {
-    /// `Block` 모델을 기반으로 **실제 블록 노드**를 생성하는 함수
+    /// `Block` 모델을 기반으로 실제 블록 노드를 생성하는 함수
     static func createBlockNode(from blockType: BlockType) -> SKSpriteNode {
         let block = Block(type: blockType)
         
@@ -18,7 +18,7 @@ struct BlockFactory {
         return node
     }
     
-    /// `Block` 모델을 기반으로 **실루엣 블록 노드**를 생성하는 함수 (반투명 효과 적용, 물리 속성 없음)
+    /// `Block` 모델을 기반으로 실루엣 블록 노드를 생성하는 함수 (반투명 효과 적용, 물리 속성 없음)
     static func createSilhouetteBlock(from blockType: BlockType) -> SKSpriteNode {
         let block = Block(type: blockType)
         let node = SKSpriteNode(texture: SKTexture(imageNamed: block.imageName))

@@ -4,7 +4,7 @@ import SwiftUI
 struct Physicollapse: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CollapseSpriteView()
         }
     }
 }

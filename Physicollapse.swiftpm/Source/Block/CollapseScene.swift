@@ -22,7 +22,7 @@ final class CollapseScene: SKScene, ObservableObject {
     private func createSceneContents(size: CGSize) {
         self.size = size
         
-        self.backgroundColor = .black
+        self.backgroundColor = .white
         self.scaleMode = .resizeFill
     }
     

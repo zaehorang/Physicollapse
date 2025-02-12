@@ -22,10 +22,10 @@ struct Block {
         
         switch type {
         case .tBlock:
-            size = CGSize(width: 90, height: 60)
-            imageName = "tBlock.png"
+            size = CGSize(width: 50, height: 50)
+            imageName = "shortOBlock.png"
         case .oBlock:
-            size = CGSize(width: 90, height: 60)
+            size = CGSize(width: 100, height: 100)
             imageName = "oBlock.png"
         }
     }
