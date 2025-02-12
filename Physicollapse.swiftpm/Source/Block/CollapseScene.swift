@@ -6,6 +6,8 @@ final class CollapseScene: SKScene, ObservableObject {
     
     private var isDragging = false
     
+    @Published var highestBlockHeight: CGFloat = 0.0
+    
     ///  Scene이 View에 추가되었을 때 한 번만 호출됨
     /// - UseCase를 이 시점에서 초기화하는 것이 안정적 (Scene이 완전히 로드된 후 주입)
     override func didMove(to view: SKView) {
@@ -19,10 +21,16 @@ final class CollapseScene: SKScene, ObservableObject {
         setupBoundaries()
     }
     
+    override func update(_ currentTime: TimeInterval) {
+        if let newHeight = getHeightFromFloor() {
+            highestBlockHeight = newHeight
+        }
+    }
+    
     private func createSceneContents(size: CGSize) {
         self.size = size
         
-        self.backgroundColor = .white
+        self.backgroundColor = .gray
         self.scaleMode = .resizeFill
     }
     
@@ -54,6 +62,15 @@ final class CollapseScene: SKScene, ObservableObject {
     func moveCameraDown() {
         cameraUseCase.moveCameraDown()
     }
+    
+    /// 바닥에서 가장 높은 블록까지의 거리 반환
+    func getHeightFromFloor() -> CGFloat? {
+        guard let highestY = getHighestBlockYPosition() else { return nil }
+        
+        let floorY: CGFloat = 5 // 바닥의 Y 좌표 (setupBoundaries에서 설정)
+        return highestY - floorY
+    }
+
     
     // MARK: - Block UseCase Methods (Internal)
     
@@ -116,5 +133,16 @@ final class CollapseScene: SKScene, ObservableObject {
     
     private func convertPosition(from viewPosition: CGPoint) -> CGPoint {
         convertPoint(fromView: viewPosition)
+    }
+    
+    /// 현재 씬에서 가장 높은 블록의 Y 위치를 반환
+    private func getHighestBlockYPosition() -> CGFloat? {
+        let blockNodes = children.compactMap { $0 as? SKSpriteNode } // 블록만 필터링
+        
+        guard let highestBlock = blockNodes.max(by: { $0.position.y < $1.position.y }) else {
+            return nil // 블록이 없으면 nil 반환
+        }
+        
+        return highestBlock.position.y
     }
 }
