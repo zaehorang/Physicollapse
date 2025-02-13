@@ -27,11 +27,10 @@ struct SelectBlockView: View {
                     .shadow(color: .black.opacity(0.1), radius: 5)
                 
                 Text("Select Block")
-                    .font(.title)
+                    .font(.title3)
                     .bold()
                     .foregroundColor(.black)
             }
-            .padding(.horizontal)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(Color.gray, lineWidth: 2)
