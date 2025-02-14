@@ -58,16 +58,16 @@ struct KeyboardButton: View {
 
 #Preview {
     VStack(spacing: 20) {
-        KeyboardButton(direction: .up) {
+        KeyboardButton(.up) {
             print("⬆️ Up button tapped")
         }
-        KeyboardButton(direction: .down) {
+        KeyboardButton(.down) {
             print("⬇️ Down button tapped")
         }
-        KeyboardButton(direction: .left) {
+        KeyboardButton(.left) {
             print("⬅️ Left button tapped")
         }
-        KeyboardButton(direction: .right) {
+        KeyboardButton(.right) {
             print("➡️ Right button tapped")
         }
     }
