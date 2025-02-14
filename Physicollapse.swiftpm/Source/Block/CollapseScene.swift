@@ -2,7 +2,7 @@ import SpriteKit
 
 final class CollapseScene: SKScene, ObservableObject {
     private var blockUseCase: BlockUseCase!
-    private var cameraUseCase: CameraUseCase!
+    var cameraUseCase: CameraUseCase!
     
     private var isDragging = false
     
@@ -51,16 +51,15 @@ final class CollapseScene: SKScene, ObservableObject {
         let convertedPosition = convertPosition(from: position)
         
         releaseBlock(type: type, at: convertedPosition)
-        adjustCamera(for: convertedPosition)
     }
     
     //  카메라 조작 관련 외부에서 호출하는 메서드
     func moveCameraUp() {
-        cameraUseCase.moveCameraUp()
+        cameraUseCase.moveCamera(to: .left)
     }
     
     func moveCameraDown() {
-        cameraUseCase.moveCameraDown()
+        cameraUseCase.moveCamera(to: .right)
     }
     
     /// 바닥에서 가장 높은 블록까지의 거리 반환
@@ -88,12 +87,6 @@ final class CollapseScene: SKScene, ObservableObject {
     private func releaseBlock(type: BlockType, at position: CGPoint) {
         isDragging = false
         blockUseCase.releaseBlock(type: type, at: position)
-    }
-    
-    // MARK: - Camera UseCase Methods (Internal)
-
-    private func adjustCamera(for blockPosition: CGPoint) {
-        cameraUseCase.adjustCamera(to: blockPosition)
     }
     
     // MARK: - Set Boundary

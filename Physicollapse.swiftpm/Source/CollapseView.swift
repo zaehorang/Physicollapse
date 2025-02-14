@@ -11,26 +11,24 @@ struct CollapseView: View {
     @State private var selectedBlock: BlockType = .tBlock
     @State private var highestBlockHeight: CGFloat = 0.0
     
+    @StateObject private var collapseScene: CollapseScene = CollapseScene()
+    
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
             
             HStack(alignment: .top, spacing: 10) {
-                VStack {
-                    BlockHoldView(block: selectedBlock)
-                    Spacer()
-                    CollapseResultView(height: highestBlockHeight)
-                }
-                .frame(width: width * 0.15)
+                BlockLeftPanel(selectedBlock: $selectedBlock, highestBlockHeight: $highestBlockHeight)
+                    .frame(width: width * 0.15)
                 
-                CollapseSpriteView(selectedBlockType: selectedBlock) { height in
+                
+                CollapseSpriteView(collapseScene: collapseScene, selectedBlockType: selectedBlock) { height in
                     highestBlockHeight = height
                 }
                 .frame(width: width * 0.7)
                 
-                SelectBlockView { selected in
-                    selectedBlock = selected
-                }
+                BlockRightPanel(selectedBlock: $selectedBlock, scene: collapseScene)
+                    .frame(width: width * 0.15)
             }
         }
     }

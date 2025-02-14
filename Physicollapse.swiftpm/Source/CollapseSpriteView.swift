@@ -9,50 +9,24 @@ import SpriteKit
 import SwiftUI
 
 struct CollapseSpriteView: View {
-    @StateObject private var scene = CollapseScene()
+    @ObservedObject var collapseScene: CollapseScene
     
     let selectedBlockType: BlockType
     let onHeightChange: (CGFloat) -> Void
     
     var body: some View {
-        VStack {
-            VStack {
-                HStack {
-                    Button("Up") {
-                        scene.moveCameraUp()
+        SpriteView(scene: collapseScene)
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        collapseScene.handleDraggingBlock(at: value.location, type: selectedBlockType)
                     }
-                    .padding()
-                    .background(.yellow.opacity(0.3))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    
-                    Button("Down") {
-                        scene.moveCameraDown()
+                    .onEnded { value in
+                        collapseScene.releaseBlockAndAdjustCamera(type: selectedBlockType, at: value.location)
                     }
-                    .padding()
-                    .background(.yellow.opacity(0.3))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                }
+            )
+            .onChange(of: collapseScene.highestBlockHeight) {
+                onHeightChange(collapseScene.highestBlockHeight)
             }
-            
-            SpriteView(scene: scene)
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { value in
-                            scene.handleDraggingBlock(at: value.location, type: selectedBlockType)
-                        }
-                        .onEnded { value in
-                            scene.releaseBlockAndAdjustCamera(type: selectedBlockType, at: value.location)
-                        }
-                )
-        }
-        .onChange(of: scene.highestBlockHeight) {
-            onHeightChange(scene.highestBlockHeight)
-        }
-    }
-}
-
-#Preview {
-    CollapseSpriteView(selectedBlockType: .iBlock) { height in
-        print("height: \(height)")
     }
 }
