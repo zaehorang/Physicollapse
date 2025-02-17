@@ -18,7 +18,7 @@ final class CollapseScene: SKScene, ObservableObject {
         blockUseCase = BlockUseCaseImpl(scene: self)
         cameraUseCase = CameraUseCaseImpl(scene: self)
         
-        setupBoundaries()
+        setupFloor()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -53,14 +53,6 @@ final class CollapseScene: SKScene, ObservableObject {
         releaseBlock(type: type, at: convertedPosition)
     }
     
-    //  카메라 조작 관련 외부에서 호출하는 메서드
-    func moveCameraUp() {
-        cameraUseCase.moveCamera(to: .left)
-    }
-    
-    func moveCameraDown() {
-        cameraUseCase.moveCamera(to: .right)
-    }
     
     /// 바닥에서 가장 높은 블록까지의 거리 반환
     func getHeightFromFloor() -> CGFloat? {
@@ -91,34 +83,17 @@ final class CollapseScene: SKScene, ObservableObject {
     
     // MARK: - Set Boundary
     /// 바닥과 양쪽 벽을 개별적으로 추가
-    private func setupBoundaries() {
+    private func setupFloor() {
         let boundaryThickness: CGFloat = 5  // 벽 두께
         let worldWidth = size.width
-        let worldHeight = size.height
         
         // 바닥 생성
         let floor = SKNode()
         floor.position = CGPoint(x: worldWidth / 2, y: 0)
-        let floorBody = SKPhysicsBody(rectangleOf: CGSize(width: worldWidth, height: boundaryThickness))
+        let floorBody = SKPhysicsBody(rectangleOf: CGSize(width: worldWidth * 10, height: boundaryThickness))
         floorBody.isDynamic = false
         floor.physicsBody = floorBody
         addChild(floor)
-        
-        // 왼쪽 벽 생성
-        let leftWall = SKNode()
-        leftWall.position = CGPoint(x: 0, y: worldHeight / 2)
-        let leftWallBody = SKPhysicsBody(rectangleOf: CGSize(width: boundaryThickness, height: worldHeight * 10)) // 무한 확장
-        leftWallBody.isDynamic = false
-        leftWall.physicsBody = leftWallBody
-        addChild(leftWall)
-        
-        // 오른쪽 벽 생성
-        let rightWall = SKNode()
-        rightWall.position = CGPoint(x: worldWidth, y: worldHeight / 2)
-        let rightWallBody = SKPhysicsBody(rectangleOf: CGSize(width: boundaryThickness, height: worldHeight * 10)) // 무한 확장
-        rightWallBody.isDynamic = false
-        rightWall.physicsBody = rightWallBody
-        addChild(rightWall)
     }
     
     
