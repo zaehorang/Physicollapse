@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CollapseResultView: View {
-    var height: CGFloat = 0
-    var count: Int = 0
+    var height: CGFloat
+    var count: Int
 
     var body: some View {
         VStack(spacing: 20) {
@@ -29,6 +29,6 @@ struct CollapseResultView: View {
 }
 
 #Preview {
-    CollapseResultView()
+    CollapseResultView(height: 100, count: 10)
 }
 

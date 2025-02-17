@@ -2,7 +2,9 @@ import SpriteKit
 
 final class CollapseScene: SKScene, ObservableObject {
     private var blockUseCase: BlockUseCase!
+    
     var cameraUseCase: CameraUseCase!
+    private var blockCounterUseCase: BlockCounterUseCase! // ✅ 추가
     
     private var isDragging = false
     
@@ -25,6 +27,11 @@ final class CollapseScene: SKScene, ObservableObject {
         if let newHeight = getHeightFromFloor() {
             highestBlockHeight = newHeight
         }
+    }
+    
+    /// 블록 카운터 주입을 위한 초기화 메서드 추가 ✅
+    func inject(blockCounter: BlockCounterUseCase) {
+        self.blockCounterUseCase = blockCounter
     }
     
     private func createSceneContents(size: CGSize) {
@@ -51,6 +58,8 @@ final class CollapseScene: SKScene, ObservableObject {
         let convertedPosition = convertPosition(from: position)
         
         releaseBlock(type: type, at: convertedPosition)
+        
+        blockCounterUseCase.increseBlockCount()
     }
     
     

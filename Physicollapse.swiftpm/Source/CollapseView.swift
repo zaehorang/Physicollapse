@@ -12,13 +12,14 @@ struct CollapseView: View {
     @State private var highestBlockHeight: CGFloat = 0.0
     
     @StateObject private var collapseScene: CollapseScene = CollapseScene()
+    @StateObject private var blockCounterUseCase = BlockCounterUseCaseImpl()
     
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
             
             HStack(alignment: .top, spacing: 10) {
-                BlockLeftPanel(selectedBlock: $selectedBlock, highestBlockHeight: $highestBlockHeight)
+                BlockLeftPanel(selectedBlock: $selectedBlock, highestBlockHeight: $highestBlockHeight, blockCount: blockCounterUseCase.getBlockCount())
                     .frame(width: width * 0.15)
                 
                 
@@ -30,6 +31,9 @@ struct CollapseView: View {
                 BlockRightPanel(selectedBlock: $selectedBlock, scene: collapseScene)
                     .frame(width: width * 0.15)
             }
+        }
+        .task {
+            collapseScene.inject(blockCounter: blockCounterUseCase)
         }
     }
 }
