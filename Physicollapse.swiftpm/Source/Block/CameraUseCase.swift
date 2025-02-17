@@ -22,7 +22,7 @@ final class CameraUseCaseImpl: CameraUseCase {
     private weak var scene: SKScene!
     private weak var cameraNode: SKCameraNode!
     
-    private let moveStep: CGFloat = 100
+    
     private var initialCameraY: CGFloat = 0
     
     // MARK: - init method
@@ -47,6 +47,8 @@ final class CameraUseCaseImpl: CameraUseCase {
     func moveCamera(to direction: CameraDirection) {
         guard let camera = cameraNode else { return }
         
+        let moveStep: CGFloat = 100
+        
         var dx: CGFloat = 0
         var dy: CGFloat = 0
         
@@ -54,7 +56,11 @@ final class CameraUseCaseImpl: CameraUseCase {
         case .up: dy = moveStep
         case .down:
             let newY = camera.position.y - moveStep
-            if newY < initialCameraY { return } // ⛔ 초기 위치보다 아래로 내려가는 것 방지
+            if newY < initialCameraY { // ⛔ 초기 위치보다 아래로 내려가는 것 방지
+                let move = SKAction.moveTo(y: initialCameraY, duration: 0.2)
+                camera.run(move)
+                return
+            }
             dy = -moveStep
         case .left: dx = -moveStep
         case .right: dx = moveStep
