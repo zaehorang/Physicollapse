@@ -16,14 +16,16 @@ struct Keyboard: View {
     let onRight: () -> Void
     
     var body: some View {
-        VStack(spacing: spacing) {
-            KeyboardButton(.up, action: onUp)
+        HStack(alignment: .bottom, spacing: spacing) {
+            KeyboardButton(.left, action: onLeft)
             
-            HStack(spacing: spacing) {
-                KeyboardButton(.left, action: onLeft)
+            // 아래 키보드와 같은 사이즈 잡기
+            VStack(spacing: spacing) {
+                KeyboardButton(.up, action: onUp)
                 KeyboardButton(.down, action: onDown)
-                KeyboardButton(.right, action: onRight)
             }
+            
+            KeyboardButton(.right, action: onRight)
         }
     }
 }

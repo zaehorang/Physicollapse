@@ -20,8 +20,6 @@ struct CollapseView: View {
             
             HStack(alignment: .top, spacing: 10) {
                 BlockLeftPanel(selectedBlock: $selectedBlock, highestBlockHeight: $highestBlockHeight, blockCount: blockCounterUseCase.getBlockCount())
-                    .frame(width: width * 0.15)
-                
                 
                 CollapseSpriteView(collapseScene: collapseScene, selectedBlockType: selectedBlock) { height in
                     highestBlockHeight = height
@@ -29,7 +27,6 @@ struct CollapseView: View {
                 .frame(width: width * 0.7)
                 
                 BlockRightPanel(selectedBlock: $selectedBlock, scene: collapseScene)
-                    .frame(width: width * 0.15)
             }
         }
         .task {

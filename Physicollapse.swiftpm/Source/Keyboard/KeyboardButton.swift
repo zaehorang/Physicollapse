@@ -36,7 +36,8 @@ struct KeyboardButton: View {
     /// 버튼의 기본 사각형 모양
     private func buttonShape() -> some View {
         Rectangle()
-            .frame(width: 44, height: 42)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .aspectRatio(1.05, contentMode: .fit)
             .foregroundStyle(.white)
             .clipShape(
                 RoundedRectangle(cornerRadius: 9)
