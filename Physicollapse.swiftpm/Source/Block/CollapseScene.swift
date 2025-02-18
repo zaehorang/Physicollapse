@@ -1,7 +1,7 @@
 import SpriteKit
 
 final class CollapseScene: SKScene, ObservableObject {
-    private var blockUseCase: BlockUseCase!
+    private var blockUseCase: BlockSettingUseCase!
     
     var cameraUseCase: CameraUseCase!
     private var blockCounterUseCase: BlockCounterUseCase! // ✅ 추가
@@ -17,7 +17,7 @@ final class CollapseScene: SKScene, ObservableObject {
         
         createSceneContents(size: view.bounds.size)
         
-        blockUseCase = BlockUseCaseImpl(scene: self)
+        blockUseCase = BlockSettingUseCaseImpl(scene: self)
         cameraUseCase = CameraUseCaseImpl(scene: self)
         
         setupFloor()

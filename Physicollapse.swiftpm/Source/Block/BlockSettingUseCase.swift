@@ -1,5 +1,5 @@
 //
-//  BlockUseCase.swift
+//  BlockSettingUseCase.swift
 //  Physicollapse
 //
 //  Created by zaehorang on 2/10/25.
@@ -7,13 +7,13 @@
 
 import SpriteKit
 
-protocol BlockUseCase {
+protocol BlockSettingUseCase {
     func startDraggingBlock(at position: CGPoint, type: BlockType)
     func moveBlock(to position: CGPoint)
     func releaseBlock(type: BlockType, at position: CGPoint)
 }
 
-final class BlockUseCaseImpl: BlockUseCase {
+final class BlockSettingUseCaseImpl: BlockSettingUseCase {
     /// NOTE: DI(Container)에서 Scene을 주입받도록 설정
     private weak var scene: SKScene?
     private var silhouetteBlock: SKSpriteNode?
