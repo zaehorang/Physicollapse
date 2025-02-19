@@ -19,6 +19,7 @@ struct BlockLeftPanel: View {
             Spacer()
             CollapseResultView(height: highestBlockHeight, count: blockCount)
         }
+        .foregroundStyle(.black)
     }
 }
 

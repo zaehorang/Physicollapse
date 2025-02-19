@@ -30,7 +30,12 @@ struct BlockHoldView: View {
         .background(Color.white.opacity(0.8))
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(color: .black.opacity(0.1), radius: 5)
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(Color.gray, lineWidth: 2)
+        )
         .padding()
+        
     }
 }
 

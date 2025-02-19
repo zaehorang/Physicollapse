@@ -24,7 +24,7 @@ struct CollapseResultView: View {
                 .background(Color.gray.opacity(0.1))
                 .clipShape(RoundedRectangle(cornerRadius: 20))
         )
-        .padding()
+        .padding(.horizontal)
     }
 }
 

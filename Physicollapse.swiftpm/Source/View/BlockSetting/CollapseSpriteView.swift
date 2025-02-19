@@ -22,6 +22,7 @@ struct CollapseSpriteView: View {
                 }
                 .padding()
             }
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in

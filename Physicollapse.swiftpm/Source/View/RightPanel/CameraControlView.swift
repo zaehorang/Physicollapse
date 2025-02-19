@@ -13,6 +13,9 @@ struct CameraControlView: View {
     var body: some View {
         VStack {
             Text("Camera")
+                .font(.headline)
+                .bold()
+                .padding(.bottom)
             
             Keyboard(
                 onUp: { cameraUseCase?.moveCamera(to: .up) },

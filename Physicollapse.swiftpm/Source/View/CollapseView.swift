@@ -28,7 +28,9 @@ struct CollapseView: View {
                 
                 BlockRightPanel(selectedBlock: $selectedBlock, scene: collapseScene)
             }
+            .padding(.bottom, 5)
         }
+        .background(.white)
         .task {
             collapseScene.inject(blockCounter: blockCounterUseCase)
         }

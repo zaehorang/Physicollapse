@@ -22,5 +22,6 @@ struct BlockRightPanel: View {
             CameraControlView(cameraUseCase: scene.cameraUseCase)
                 .padding(.horizontal, 10)
         }
+        .foregroundStyle(.black)
     }
 }
