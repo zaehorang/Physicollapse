@@ -11,9 +11,12 @@ protocol BlockSettingUseCase {
     func startDraggingBlock(at position: CGPoint, type: BlockType)
     func moveBlock(to position: CGPoint)
     func releaseBlock(type: BlockType, at position: CGPoint)
+    func undoLastBlock()
 }
 
 final class BlockSettingUseCaseImpl: BlockSettingUseCase {
+    private var placedBlocks: [SKSpriteNode] = []
+    
     /// NOTE: DI(Container)에서 Scene을 주입받도록 설정
     private weak var scene: SKScene?
     private var silhouetteBlock: SKSpriteNode?
@@ -31,7 +34,7 @@ final class BlockSettingUseCaseImpl: BlockSettingUseCase {
     }
     
     func moveBlock(to position: CGPoint) {
-        silhouetteBlock?.position = position  // ✅ 드래그 중 블록 위치 업데이트
+        silhouetteBlock?.position = position
     }
     
     func releaseBlock(type: BlockType, at position: CGPoint) {
@@ -42,7 +45,13 @@ final class BlockSettingUseCaseImpl: BlockSettingUseCase {
         realBlock.position = position
         scene?.addChild(realBlock)
         
-        silhouetteBlock = nil  // ✅ 블록 배치 후 제거
+        placedBlocks.append(realBlock)
+        silhouetteBlock = nil
+    }
+    
+    func undoLastBlock() {
+        guard let lastBlock = placedBlocks.popLast() else { return }
+        lastBlock.removeFromParent()
     }
     
 }

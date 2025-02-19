@@ -70,6 +70,10 @@ final class CollapseScene: SKScene, ObservableObject {
         let floorY: CGFloat = 5 // 바닥의 Y 좌표 (setupBoundaries에서 설정)
         return highestY - floorY
     }
+    
+    func undoLastBlock() {
+        blockUseCase.undoLastBlock()
+    }
 
     
     // MARK: - Block UseCase Methods (Internal)

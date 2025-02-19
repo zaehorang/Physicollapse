@@ -20,6 +20,7 @@ struct BlockRightPanel: View {
             Spacer()
             
             CameraControlView(cameraUseCase: scene.cameraUseCase)
+                .padding(.horizontal, 10)
         }
     }
 }
