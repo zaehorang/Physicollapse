@@ -12,6 +12,7 @@ protocol BlockSettingUseCase {
     func moveBlock(to position: CGPoint)
     func releaseBlock(type: BlockType, at position: CGPoint)
     func undoLastBlock()
+    func clearAllBlocks()
 }
 
 final class BlockSettingUseCaseImpl: BlockSettingUseCase {
@@ -54,4 +55,10 @@ final class BlockSettingUseCaseImpl: BlockSettingUseCase {
         lastBlock.removeFromParent()
     }
     
+    func clearAllBlocks() { // 모든 블록을 지우는 기능 구현
+            for block in placedBlocks {
+                block.removeFromParent()
+            }
+            placedBlocks.removeAll()
+        }
 }

@@ -79,6 +79,13 @@ final class CollapseScene: SKScene, ObservableObject {
         
         updateHeightFromFloor()
     }
+    
+    func clearAllBlocks() {
+        blockUseCase.clearAllBlocks()
+        blockCounterUseCase.resetBlockCount()
+        
+        updateHeightFromFloor()
+    }
 
     
     // MARK: - Block UseCase Methods (Internal)
