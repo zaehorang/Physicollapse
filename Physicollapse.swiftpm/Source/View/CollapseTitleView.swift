@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CollapseTitleView: View {
     @Binding var isGameActive: Bool
+    @State private var showHelp = false
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -27,7 +28,7 @@ struct CollapseTitleView: View {
                     
                     // Help 버튼
                     customButton(title: "HELP") {
-                        // 설명 팝업
+                        showHelp = true
                     }
                 }
                 .transition(.opacity)
@@ -35,6 +36,9 @@ struct CollapseTitleView: View {
             }
             .animation(.easeInOut(duration: 0.5), value: isGameActive)
             .padding(.trailing, 100)
+            .sheet(isPresented: $showHelp) {
+                HelpView()
+            }
         }
     }
     
@@ -42,7 +46,7 @@ struct CollapseTitleView: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 28, weight: .bold))
-                .foregroundColor(.blue.opacity(0.5))
+                .foregroundStyle(.blue.opacity(0.5))
                 .padding()
                 .frame(width: 180, height: 60)
                 .background(
@@ -75,3 +79,5 @@ struct CollapseTitleView: View {
 #Preview {
     CollapseTitleView(isGameActive: .constant(false))
 }
+
+
