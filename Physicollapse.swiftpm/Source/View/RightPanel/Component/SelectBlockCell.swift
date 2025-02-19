@@ -35,6 +35,7 @@ struct SelectBlockCell: View {
                         .resizable()
                         .scaledToFit()
                         .padding(8)
+                        .background(Color(.cardBackground))
                 }
             }
             .aspectRatio(1, contentMode: .fit) // ✅ 셀 전체가 정사각형을 유지하도록 설정

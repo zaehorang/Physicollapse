@@ -24,9 +24,7 @@ final class CollapseScene: SKScene, ObservableObject {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        if let newHeight = getHeightFromFloor() {
-            highestBlockHeight = newHeight
-        }
+        updateHeightFromFloor()
     }
     
     /// 블록 카운터 주입을 위한 초기화 메서드 추가 ✅
@@ -64,15 +62,22 @@ final class CollapseScene: SKScene, ObservableObject {
     
     
     /// 바닥에서 가장 높은 블록까지의 거리 반환
-    func getHeightFromFloor() -> CGFloat? {
-        guard let highestY = getHighestBlockYPosition() else { return nil }
+    func updateHeightFromFloor() {
+        guard let highestY = getHighestBlockYPosition() else {
+            highestBlockHeight = 0
+            return
+        }
         
         let floorY: CGFloat = 5 // 바닥의 Y 좌표 (setupBoundaries에서 설정)
-        return highestY - floorY
+        
+        highestBlockHeight =  highestY - floorY
     }
     
     func undoLastBlock() {
+        blockCounterUseCase.decreseBlockCount()
         blockUseCase.undoLastBlock()
+        
+        updateHeightFromFloor()
     }
 
     
