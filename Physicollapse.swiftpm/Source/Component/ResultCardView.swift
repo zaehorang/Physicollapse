@@ -15,10 +15,10 @@ struct ResultCardView: View {
     var body: some View {
         VStack(spacing: 10) {
             Text(title)
-                .font(.title)
+                .font(.title3)
                 .bold()
             Text(value)
-                .font(.title2)
+                .font(.title)
                 .foregroundColor(color)
         }
         .padding()

@@ -8,21 +8,24 @@
 import SwiftUI
 
 struct BlockHoldView: View {
-    var block: BlockType
+    var blockType: BlockType
+    
+    private var block: Block {
+        Block(type: blockType)
+    }
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 3) {
             Text("Hold")
-                .font(.title)
+                .font(.title3)
                 .bold()
 
-            Image(block.rawValue)
+            Image(block.cardImageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 80, height: 80) // 블록 크기
                 .padding()
         }
-        .padding()
+        .padding(.top)
         .frame(maxWidth: .infinity)
         .background(Color.white.opacity(0.8))
         .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -32,5 +35,5 @@ struct BlockHoldView: View {
 }
 
 #Preview {
-    BlockHoldView(block: .tBlock)
+    BlockHoldView(blockType: .tBlock)
 }

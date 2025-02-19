@@ -13,6 +13,10 @@ struct SelectBlockCell: View {
     let isSelected: Bool
     var onSelect: (BlockType) -> Void
     
+    private var block: Block {
+        Block(type: blockType)
+    }
+    
     var body: some View {
         Button {
             onSelect(blockType)
@@ -27,7 +31,7 @@ struct SelectBlockCell: View {
                                 .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
                         )
                     
-                    Image(blockType.rawValue) // 블록 타입별 이미지
+                    Image(block.cardImageName) // 블록 타입별 이미지
                         .resizable()
                         .scaledToFit()
                         .padding(8)

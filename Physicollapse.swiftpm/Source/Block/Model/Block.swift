@@ -32,6 +32,7 @@ struct Block {
     let type: BlockType
     let size: CGSize
     let imageName: String
+    let cardImageName: String
     
     /// 블록의 기본 크기 (단위 크기, 기본값 50)
     static var unitSize: CGFloat = 50.0
@@ -47,5 +48,6 @@ struct Block {
                            height: CGFloat(heightCount) * unit)
         
         self.imageName = type.rawValue + ".png"
+        self.cardImageName = type.rawValue + "Card"
     }
 }

@@ -15,7 +15,7 @@ struct BlockLeftPanel: View {
     
     var body: some View {
         VStack {
-            BlockHoldView(block: selectedBlock)
+            BlockHoldView(blockType: selectedBlock)
             Spacer()
             CollapseResultView(height: highestBlockHeight, count: blockCount)
         }
