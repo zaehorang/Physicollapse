@@ -30,7 +30,7 @@ struct CollapseGameView: View {
                 
                 BlockRightPanel(isGameActive: $isGameActive, selectedBlock: $selectedBlock, scene: collapseScene)
             }
-            .padding(.bottom, 5)
+            .padding(.vertical, 5)
         }
         .background(Color(.whiteBackground))
         .task {

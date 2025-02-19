@@ -20,6 +20,7 @@ struct BlockLeftPanel: View {
             CollapseResultView(height: highestBlockHeight, count: blockCount)
         }
         .foregroundStyle(.black)
+        .padding(.vertical)
     }
 }
 

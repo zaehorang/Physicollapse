@@ -46,6 +46,7 @@ struct BlockRightPanel: View {
                 .padding(.horizontal, 10)
         }
         .foregroundStyle(.black)
+        .padding(.vertical)
     }
     
     

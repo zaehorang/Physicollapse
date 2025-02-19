@@ -16,7 +16,7 @@ struct CollapseResultView: View {
             ResultCardView(title: "Height", value: "\(Int(height))", color: .blue)
             ResultCardView(title: "Count", value: "\(count)", color: .green)
         }
-        .padding()
+        .padding(.horizontal)
         .frame(maxWidth: .infinity)
     }
 }

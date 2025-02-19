@@ -35,7 +35,7 @@ struct Block {
     let cardImageName: String
     
     /// 블록의 기본 크기 (단위 크기, 기본값 50)
-    static var unitSize: CGFloat = 50.0
+    static var unitSize: CGFloat = 30
     
     init(type: BlockType) {
         self.type = type
