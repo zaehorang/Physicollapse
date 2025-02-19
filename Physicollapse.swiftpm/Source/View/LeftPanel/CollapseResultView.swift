@@ -18,13 +18,6 @@ struct CollapseResultView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.gray, lineWidth: 2)
-                .background(Color.gray.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-        )
-        .padding(.horizontal)
     }
 }
 

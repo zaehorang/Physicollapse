@@ -26,11 +26,11 @@ struct SelectBlockCell: View {
                     .resizable()
                     .scaledToFit()
                     .padding(8)
-                    .background(Color(.cardBackground))
+                    .background(.white.opacity(0.7))
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+                            .stroke(isSelected ? Color(.mainBackground) : Color.clear, lineWidth: 5)
                     )
             }
             .aspectRatio(1, contentMode: .fit)

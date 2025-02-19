@@ -20,21 +20,11 @@ struct SelectBlockView: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.white.opacity(0.8))
-                    .frame(height: 60) // 고정된 높이 유지
-                    .shadow(color: .black.opacity(0.1), radius: 5)
-                
-                Text("Select Block")
-                    .font(.title3)
-                    .bold()
-                    .foregroundColor(.black)
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.gray, lineWidth: 2)
-            )
+            Text("Select Block")
+                .font(.title3)
+                .bold()
+                .foregroundColor(.black)
+                .padding(.bottom, 15)
             
             LazyVGrid(columns: fixedColumn, spacing: 20) {
                 ForEach(blockTypes, id: \.self) { blockType in

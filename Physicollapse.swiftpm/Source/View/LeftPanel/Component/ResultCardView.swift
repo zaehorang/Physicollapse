@@ -23,7 +23,7 @@ struct ResultCardView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(Color.white.opacity(0.8))
+        .background(.white.opacity(0.7))
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(color: .black.opacity(0.1), radius: 5)
     }

@@ -1,5 +1,5 @@
 //
-//  CollapseView.swift
+//  CollapseGameView.swift
 //  Physicollapse
 //
 //  Created by zaehorang on 2/12/25.
@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct CollapseView: View {
+struct CollapseGameView: View {
+    @Binding var isGameActive: Bool
+    
     @State private var selectedBlock: BlockType = .tBlock
     @State private var highestBlockHeight: CGFloat = 0.0
     
@@ -26,11 +28,11 @@ struct CollapseView: View {
                 }
                 .frame(width: width * 0.7)
                 
-                BlockRightPanel(selectedBlock: $selectedBlock, scene: collapseScene)
+                BlockRightPanel(isGameActive: $isGameActive, selectedBlock: $selectedBlock, scene: collapseScene)
             }
             .padding(.bottom, 5)
         }
-        .background(.white)
+        .background(Color(.whiteBackground))
         .task {
             collapseScene.inject(blockCounter: blockCounterUseCase)
         }
@@ -38,5 +40,5 @@ struct CollapseView: View {
 }
 
 #Preview {
-    CollapseView()
+    CollapseGameView(isGameActive: .constant(true))
 }
