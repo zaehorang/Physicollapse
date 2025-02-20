@@ -8,9 +8,9 @@
 import SpriteKit
 
 protocol BlockSettingUseCase {
-    func startDraggingBlock(at position: CGPoint, type: BlockType)
+    func startDraggingBlock(at position: CGPoint, block: BlockSettingModel)
     func moveBlock(to position: CGPoint)
-    func releaseBlock(type: BlockType, at position: CGPoint)
+    func releaseBlock(block: BlockSettingModel, at position: CGPoint)
     func undoLastBlock()
     func clearAllBlocks()
 }
@@ -26,10 +26,11 @@ final class BlockSettingUseCaseImpl: BlockSettingUseCase {
         self.scene = scene
     }
     
-    func startDraggingBlock(at position: CGPoint, type: BlockType) {
+    func startDraggingBlock(at position: CGPoint, block: BlockSettingModel) {
         if silhouetteBlock == nil {
-            silhouetteBlock = BlockFactory.createSilhouetteBlock(from: type)
+            silhouetteBlock = BlockFactory.createSilhouetteBlock(from: block.type)
             silhouetteBlock?.position = position
+            silhouetteBlock?.zRotation = -CGFloat(block.rotation.radians) // ✅ 회전 적용
             scene?.addChild(silhouetteBlock!)
         }
     }
@@ -38,12 +39,13 @@ final class BlockSettingUseCaseImpl: BlockSettingUseCase {
         silhouetteBlock?.position = position
     }
     
-    func releaseBlock(type: BlockType, at position: CGPoint) {
-        guard let block = silhouetteBlock else { return }
-        block.removeFromParent()
+    func releaseBlock(block: BlockSettingModel, at position: CGPoint) {
+        guard let silhouette = silhouetteBlock else { return }
+        silhouette.removeFromParent()
         
-        let realBlock = BlockFactory.createBlockNode(from: type)
+        let realBlock = BlockFactory.createBlockNode(from: block.type)
         realBlock.position = position
+        realBlock.zRotation = -CGFloat(block.rotation.radians) // ✅ 회전 적용
         scene?.addChild(realBlock)
         
         placedBlocks.append(realBlock)
@@ -56,9 +58,9 @@ final class BlockSettingUseCaseImpl: BlockSettingUseCase {
     }
     
     func clearAllBlocks() { // 모든 블록을 지우는 기능 구현
-            for block in placedBlocks {
-                block.removeFromParent()
-            }
-            placedBlocks.removeAll()
+        for block in placedBlocks {
+            block.removeFromParent()
         }
+        placedBlocks.removeAll()
+    }
 }

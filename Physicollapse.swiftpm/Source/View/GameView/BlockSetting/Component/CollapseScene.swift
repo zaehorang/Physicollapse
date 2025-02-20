@@ -42,20 +42,20 @@ final class CollapseScene: SKScene, ObservableObject {
     // MARK: - Public Method (For External Use)
     
     //  블록 조작 관련 외부에서 호출하는 메서드
-    func handleDraggingBlock(at position: CGPoint, type: BlockType) {
+    func handleDraggingBlock(at position: CGPoint, block: BlockSettingModel) {
         let convertedPosition = convertPosition(from: position)
         
         if isDragging {
             moveBlock(to: convertedPosition)
         } else {
-            startDraggingBlock(at: convertedPosition, type: type)
+            startDraggingBlock(at: convertedPosition, block: block)
         }
     }
     
-    func releaseBlockAndAdjustCamera(type: BlockType, at position: CGPoint) {
+    func releaseBlockAndAdjustCamera(block: BlockSettingModel, at position: CGPoint) {
         let convertedPosition = convertPosition(from: position)
         
-        releaseBlock(type: type, at: convertedPosition)
+        releaseBlock(block: block, at: convertedPosition)
         
         blockCounterUseCase.increseBlockCount()
     }
@@ -91,9 +91,9 @@ final class CollapseScene: SKScene, ObservableObject {
     // MARK: - Block UseCase Methods (Internal)
     
     /// 블록 드래그 시작
-    private func startDraggingBlock(at position: CGPoint, type: BlockType) {
+    private func startDraggingBlock(at position: CGPoint, block: BlockSettingModel) {
         isDragging = true
-        blockUseCase.startDraggingBlock(at: position, type: type)
+        blockUseCase.startDraggingBlock(at: position, block: block)
     }
     
     /// 블록 이동
@@ -101,9 +101,9 @@ final class CollapseScene: SKScene, ObservableObject {
         blockUseCase.moveBlock(to: position)
     }
     
-    private func releaseBlock(type: BlockType, at position: CGPoint) {
+    private func releaseBlock(block: BlockSettingModel, at position: CGPoint) {
         isDragging = false
-        blockUseCase.releaseBlock(type: type, at: position)
+        blockUseCase.releaseBlock(block: block, at: position)
     }
     
     // MARK: - Set Boundary

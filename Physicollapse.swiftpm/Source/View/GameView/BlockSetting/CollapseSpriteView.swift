@@ -11,7 +11,7 @@ import SwiftUI
 struct CollapseSpriteView: View {
     @ObservedObject var collapseScene: CollapseScene
     
-    let selectedBlockType: BlockType
+    let block: BlockSettingModel
     let onHeightChange: (CGFloat) -> Void
     
     var body: some View {
@@ -31,10 +31,10 @@ struct CollapseSpriteView: View {
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
-                        collapseScene.handleDraggingBlock(at: value.location, type: selectedBlockType)
+                        collapseScene.handleDraggingBlock(at: value.location, block: block)
                     }
                     .onEnded { value in
-                        collapseScene.releaseBlockAndAdjustCamera(type: selectedBlockType, at: value.location)
+                        collapseScene.releaseBlockAndAdjustCamera(block: block, at: value.location)
                     }
             )
             .onChange(of: collapseScene.highestBlockHeight) {
