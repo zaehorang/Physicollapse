@@ -11,16 +11,18 @@ struct HelpView: View {
     @Environment(\.dismiss) var dismiss
     @State private var pageIndex = 0
     
-    let images = ["fewerBlock", "higherBlock"] // 설명 이미지 파일명
+    let images = ["fewerBlock", "higherBlock", "realBlock"] // 설명 이미지 파일명
     
     let titles = [
         "Use Fewer Blocks!",
-        "Stack Blocks Higher!"
+        "Stack Blocks Higher!",
+        "Try It in Real Life!"
     ]
     
     let descriptions = [
         "The fewer blocks you use, the more stable and efficient your tower will be.\nThink carefully before placing each block!",
-        "A taller tower means you are using space wisely.\nTry to balance your blocks so the tower doesn’t fall!"
+        "A taller tower means you are using space wisely.\nTry to balance your blocks so the tower doesn’t fall!",
+        "If you enjoyed stacking blocks in the game, try building with real blocks!\n Test your skills and creativity in the real world!"
     ]
     
     var body: some View {

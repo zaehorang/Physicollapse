@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Physicollapse",
+    name: "Physicolapse",
     platforms: [
         .iOS("18.1")
     ],
     products: [
         .iOSApplication(
-            name: "Physicollapse",
+            name: "Physicolapse",
             targets: ["AppModule"],
             displayVersion: "1.0",
             bundleVersion: "1",
