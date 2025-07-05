@@ -1,5 +1,5 @@
 # Physicollapse  
-2025 Swift Student Challenge 수상작 🏆  
+WWDC25 Swift Student Challenge Winner🏆  
 > 구조와 균형을 배우는 디지털 블록 놀이  
 > A playful way to explore balance and structure through digital block stacking
 
